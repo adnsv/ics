@@ -1,5 +1,7 @@
 # Inverval Containment Sets implemened in GO
 
+[![GoDoc](https://godoc.org/github.com/adnsv/ics?status.svg)](https://godoc.org/github.com/adnsv/ics)
+
 Interval containment sets (ICS) provide efficient solution for testing
 containment in overlapping arithmetic intervals. This includes binary
 classification for discrete and continuous values like integer of floating point
@@ -91,3 +93,8 @@ The library features a couple of containment sets specializations for Unicode
 codepoints and ASCII codeunits. For convenience, these sets provide insertion
 and enumeration API that operates with fully closed `[a-z]`-style ranges instead
 of half-open intervals.
+
+## Documentation
+
+Automatically generated documentation for the package can be viewed online here:
+http://pkg.go.dev/github.com/adnsv/ics
