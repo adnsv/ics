@@ -12,6 +12,16 @@ type RuneSet Set[rune]
 // AsciiSet is a containment set for 7-bit ASCII characters [\x00..\x7f].
 type AsciiSet Set[byte]
 
+// Contains indicates if r is contained within s.
+func (s RuneSet) Contains(r rune) bool {
+	return r <= unicode.MaxRune && Contains(s, r)
+}
+
+// Contains indicates if b is contained within s.
+func (s AsciiSet) Contains(b byte) bool {
+	return b <= 127 && Contains(s, b)
+}
+
 // Inverted returns a containment set with inverted logic.
 func (s RuneSet) Inverted() RuneSet {
 	if len(s) == 0 {
