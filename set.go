@@ -30,6 +30,8 @@ func Contains[S ~[]T, T constraints.Ordered](s S, e T) bool {
 	return (i&1 == 0) == ok
 }
 
+// Hull returns a set that contains at most one interval that covers all
+// intervals in s.
 func Hull[S ~[]T, T constraints.Ordered](s S) S {
 	n := len(s)
 	if n <= 2 {
