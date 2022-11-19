@@ -237,6 +237,44 @@ func MergeAsciiSets(ss ...AsciiSet) (m AsciiSet) {
 	return
 }
 
+// CountElements returns the number of ASCII codeunits effectively
+// contained in s.
+func (s AsciiSet) CountElements() int {
+	r, i, n := 0, 0, len(s)
+	for i+1 < n {
+		r += int(s[i+1]) - int(s[i])
+		i += 2
+	}
+	if i < n {
+		r += 128 - int(s[i])
+	}
+	return r
+}
+
+// CountElements returns the number of unicode codepoints effectively
+// contained in s.
+func (s RuneSet) CountElements() int {
+	r, i, n := 0, 0, len(s)
+	for i+1 < n {
+		r += int(s[i+1]) - int(s[i])
+		i += 2
+	}
+	if i < n {
+		r += utf8.MaxRune - int(s[i])
+	}
+	return r
+}
+
+// Hull returns a hull of all the ranges in s.
+func (s AsciiSet) Hull() AsciiSet {
+	return Hull(s)
+}
+
+// Hull returns a hull of all the ranges in s.
+func (s RuneSet) Hull() RuneSet {
+	return Hull(s)
+}
+
 func print_ascii(w *bytes.Buffer, c byte) {
 	switch c {
 	case '\b':

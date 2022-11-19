@@ -30,6 +30,17 @@ func Contains[S ~[]T, T constraints.Ordered](s S, e T) bool {
 	return (i&1 == 0) == ok
 }
 
+func Hull[S ~[]T, T constraints.Ordered](s S) S {
+	n := len(s)
+	if n <= 2 {
+		return s
+	} else if n&1 == 1 {
+		return s[:1]
+	} else {
+		return S{s[0], s[n-1]}
+	}
+}
+
 const linear_search_threshold = 64
 
 func linear_search[S ~[]T, T constraints.Ordered](s S, e T) (int, bool) {

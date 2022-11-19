@@ -2,6 +2,7 @@ package ics
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
 	"golang.org/x/exp/slices"
@@ -81,6 +82,50 @@ func TestRuneSet_String(t *testing.T) {
 				t.Errorf("[%s].String() = %v, want %v", name, got, tt.want)
 			} else {
 				t.Logf("[%s].String() = %v", name, got)
+			}
+		})
+	}
+}
+
+func TestAsciiSet_CountElements(t *testing.T) {
+	tests := []struct {
+		s    AsciiSet
+		want int
+	}{
+		{AsciiSet{}, 0},
+		{AsciiSet{0}, 128},
+		{AsciiSet{126}, 2},
+		{AsciiSet{127}, 1},
+		{AsciiSet{0, 1}, 1},
+		{AsciiSet{126, 127}, 1},
+		{AsciiSet{0, 10, 117, 127}, 20},
+		{AsciiSet{0, 10, 118}, 20},
+	}
+	for _, tt := range tests {
+		t.Run(tt.s.String(), func(t *testing.T) {
+			if got := tt.s.CountElements(); got != tt.want {
+				t.Errorf("AsciiSet.CountElements() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestAsciiSet_Hull(t *testing.T) {
+	tests := []struct {
+		s    AsciiSet
+		want AsciiSet
+	}{
+		{AsciiSet{}, AsciiSet{}},
+		{AsciiSet{0}, AsciiSet{0}},
+		{AsciiSet{0, 127}, AsciiSet{0, 127}},
+		{AsciiSet{0, 30, 127}, AsciiSet{0}},
+		{AsciiSet{30, 40, 127}, AsciiSet{30}},
+		{AsciiSet{20, 30, 50, 127}, AsciiSet{20, 127}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.s.String(), func(t *testing.T) {
+			if got := tt.s.Hull(); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("AsciiSet.Hull() = %v, want %v", got, tt.want)
 			}
 		})
 	}
