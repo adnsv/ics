@@ -1,4 +1,4 @@
-# Inverval Containment Sets implemened in GO
+# Interval Containment Sets implemented in GO
 
 [![GoDoc](https://godoc.org/github.com/adnsv/ics?status.svg)](https://godoc.org/github.com/adnsv/ics)
 
